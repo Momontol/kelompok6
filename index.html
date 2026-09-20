@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelompok 6 - Cerita Rakyat</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0f;color:#e8e8e8;overflow-x:hidden}
+.hero{position:relative;height:100vh;min-height:500px;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 30% 20%,#1a1a3e 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,#2a1a1a 0%,transparent 50%),#0a0a0f;overflow:hidden}
+.hero::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,0.06) 0%,transparent 70%);top:-100px;right:-100px;animation:float 8s ease-in-out infinite}
+.hero::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(6,214,160,0.05) 0%,transparent 70%);bottom:-50px;left:-50px;animation:float 10s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(255,209,102,0.3);border-radius:50px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ffd166;margin-bottom:24px;background:rgba(255,209,102,0.05)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#ffd166,#ff9a56,#ffd166);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:15px;color:#888;max-width:480px;margin:0 auto;line-height:1.7}
+.scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#555;font-size:10px;letter-spacing:2px;text-transform:uppercase;animation:bounce 2s ease-in-out infinite}
+.scroll-ind .line{width:1px;height:36px;background:linear-gradient(to bottom,#555,transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.sec-title{text-align:center;margin-bottom:40px;padding-top:60px}
+.sec-title .lbl{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#ffd166;margin-bottom:10px}
+.sec-title h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#fff}
+.carousel-section{padding:20px 20px 60px;max-width:850px;margin:0 auto}
+.carousel-box{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.05)}
+.carousel-viewport{overflow:hidden;border-radius:18px}
+.carousel-track{display:flex;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)}
+.carousel-slide{min-width:100%;position:relative;cursor:pointer}
+.carousel-slide .slide-img{width:100%;height:460px;object-fit:cover;display:block;transition:transform 0.5s}
+.carousel-slide:hover .slide-img{transform:scale(1.02)}
+.slide-overlay{position:absolute;bottom:0;left:0;right:0;padding:50px 28px 28px;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 100%)}
+.slide-overlay .num{font-family:'Playfair Display',serif;font-size:54px;font-weight:900;color:rgba(255,209,102,0.12);line-height:1}
+.slide-overlay h3{font-size:18px;font-weight:600;color:#fff;margin-top:-8px}
+.slide-overlay p{font-size:12px;color:#aaa;margin-top:4px}
+.placeholder{width:100%;height:460px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#444;font-size:13px}
+.placeholder .ico{font-size:42px;opacity:0.3}
+.c-btn{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:rgba(10,10,15,0.7);backdrop-filter:blur(10px);color:#fff;font-size:18px;cursor:pointer;z-index:5;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+.c-btn:hover{background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:#ffd166}
+.c-btn.prev{left:16px}.c-btn.next{right:16px}
+.c-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.c-dots .dot{width:28px;height:3px;border-radius:2px;background:#333;cursor:pointer;transition:all 0.4s}
+.c-dots .dot.on{background:#ffd166;width:42px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;justify-content:center;align-items:center;flex-direction:column;padding:20px}
+.modal.show{display:flex}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:90vw;margin-bottom:12px}
+.modal-hdr .cap{font-size:15px;color:#ccc;font-weight:500}
+.modal-hdr .zi{font-size:11px;color:#555}
+.modal-body{display:flex;align-items:center;gap:14px;max-width:95vw;max-height:80vh}
+.modal-nav{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;transition:all 0.2s}
+.modal-nav:hover{background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4)}
+.modal-img-wrap{overflow:hidden;border-radius:10px;border:1px solid rgba(255,255,255,0.08)}
+.modal-img{display:block;max-width:80vw;max-height:72vh;object-fit:contain;border-radius:10px;transition:transform 0.3s;transform-origin:center}
+.modal-close{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:18px;cursor:pointer;z-index:1001;transition:all 0.2s}
+.modal-close:hover{background:rgba(255,80,80,0.2);border-color:rgba(255,80,80,0.4)}
+.story-sec{padding:40px 20px 60px;max-width:750px;margin:0 auto}
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:'';position:absolute;left:13px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#ffd166,#06d6a0,#ffd166);border-radius:1px}
+.s-item{position:relative;margin-bottom:36px}
+.s-item::before{content:'';position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:#ffd166;box-shadow:0 0 16px rgba(255,209,102,0.3);border:3px solid #0a0a0f}
+.s-card{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;backdrop-filter:blur(10px);transition:all 0.3s}
+.s-card:hover{border-color:rgba(255,209,102,0.2);box-shadow:0 8px 28px rgba(0,0,0,0.3)}
+.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.tag.a{background:rgba(255,209,102,0.1);color:#ffd166}
+.tag.b{background:rgba(6,214,160,0.1);color:#06d6a0}
+.tag.c{background:rgba(118,150,255,0.1);color:#7696ff}
+.s-card h3{font-size:17px;font-weight:600;color:#fff;margin-bottom:8px}
+.s-card p{font-size:13px;line-height:1.9;color:#bbb}
+.anggota-sec{padding:40px 20px 60px;max-width:750px;margin:0 auto}
+.anggota-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px}
+.a-card{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px 12px;text-align:center;transition:all 0.3s}
+.a-card:hover{border-color:rgba(255,209,102,0.3);transform:translateY(-4px)}
+.a-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1a1a3e,#16213e);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#ffd166;border:2px solid rgba(255,209,102,0.2)}
+.a-card p{font-size:11px;font-weight:600;color:#ddd;line-height:1.4}
+.footer{text-align:center;padding:24px;color:#444;font-size:11px;border-top:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Kelompok 6</div>
+    <h1>Cerita Rakyat</h1>
+    <p>Penugasan Logika Informatika - Visualisasi cerita rakyat dalam lima gambar naratif</p>
+  </div>
+  <div class="scroll-ind">
+    <span>SCROLL</span>
+    <div class="line"></div>
+  </div>
+</div>
+
+<div class="sec-title">
+  <div class="lbl">Galeri</div>
+  <h2>Lima Babak Cerita</h2>
+</div>
+<div class="carousel-section">
+  <div class="carousel-box">
+    <button class="c-btn prev" onclick="geser(-1)">&#10094;</button>
+    <button class="c-btn next" onclick="geser(1)">&#10095;</button>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="track">
+        <div class="carousel-slide" onclick="buka(0)"><div class="placeholder"><div class="ico">&#128247;</div>Ganti dengan foto 1<br><small>edit src di script</small></div></div>
+        <div class="carousel-slide" onclick="buka(1)"><div class="placeholder"><div class="ico">&#128247;</div>Ganti dengan foto 2<br><small>edit src di script</small></div></div>
+        <div class="carousel-slide" onclick="buka(2)"><div class="placeholder"><div class="ico">&#128247;</div>Ganti dengan foto 3<br><small>edit src di script</small></div></div>
+        <div class="carousel-slide" onclick="buka(3)"><div class="placeholder"><div class="ico">&#128247;</div>Ganti dengan foto 4<br><small>edit src di script</small></div></div>
+        <div class="carousel-slide" onclick="buka(4)"><div class="placeholder"><div class="ico">&#128247;</div>Ganti dengan foto 5<br><small>edit src di script</small></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="c-dots" id="dots"></div>
+</div>
+
+<div class="modal" id="modal">
+  <button class="modal-close" onclick="tutup()">&#10005;</button>
+  <div class="modal-hdr">
+    <span class="cap" id="mCap"></span>
+    <span class="zi">scroll untuk zoom</span>
+  </div>
+  <div class="modal-body">
+    <button class="modal-nav" onclick="mGeser(-1)">&#10094;</button>
+    <div class="modal-img-wrap"><img class="modal-img" id="mImg" src="" alt=""></div>
+    <button class="modal-nav" onclick="mGeser(1)">&#10095;</button>
+  </div>
+</div>
+
+<div class="sec-title">
+  <div class="lbl">Narasi</div>
+  <h2>Jalannya Cerita</h2>
+</div>
+<div class="story-sec">
+  <div class="timeline">
+    <div class="s-item"><div class="s-card">
+      <span class="tag a">Pendahuluan</span>
+      <h3>Latar Belakang</h3>
+      <p>Isi pendahuluan / penegasan cerita rakyat di sini. Jelaskan asal-usul dan konteks cerita.</p>
+    </div></div>
+    <div class="s-item"><div class="s-card">
+      <span class="tag b">Isi Cerita</span>
+      <h3>Rangkuman Kejadian</h3>
+      <p>Isi rangkuman alur cerita rakyat di sini. Jelaskan peristiwa-peristiwa penting yang terjadi.</p>
+    </div></div>
+    <div class="s-item"><div class="s-card">
+      <span class="tag c">Penutup</span>
+      <h3>Kesimpulan</h3>
+      <p>Isi kesimpulan / akhir cerita di sini. Jelaskan hikmah atau pelajaran dari cerita tersebut.</p>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec-title">
+  <div class="lbl">Tim</div>
+  <h2>Anggota Kelompok 6</h2>
+</div>
+<div class="anggota-sec">
+  <div class="anggota-grid">
+    <div class="a-card"><div class="a-avatar">TK</div><p>TIMOTIUS KEVIN AGASSI</p></div>
+    <div class="a-card"><div class="a-avatar">MZ</div><p>MUHAMMAD ZIDAN FAIRUZ</p></div>
+    <div class="a-card"><div class="a-avatar">UR</div><p>ULLYNNUHA RAMADHAN</p></div>
+    <div class="a-card"><div class="a-avatar">WM</div><p>WILDAN MAULANA</p></div>
+    <div class="a-card"><div class="a-avatar">WI</div><p>WAHYU NUR IMAN</p></div>
+  </div>
+</div>
+
+<div class="footer">Kelompok 6 &copy; 2026</div>
+
+<script>
+const slides=[
+  {src:"foto1.jpg",alt:"Judul Foto 1",caption:"Babak 1 - Pembukaan"},
+  {src:"foto2.jpg",alt:"Judul Foto 2",caption:"Babak 2 - Perkenalan"},
+  {src:"foto3.jpg",alt:"Judul Foto 3",caption:"Babak 3 - Konflik"},
+  {src:"foto4.jpg",alt:"Judul Foto 4",caption:"Babak 4 - Klimaks"},
+  {src:"foto5.jpg",alt:"Judul Foto 5",caption:"Babak 5 - Penyelesaian"}
+];
+
+// Ganti placeholder dengan gambar asli
+const track=document.getElementById("track");
+slides.forEach((s,i)=>{
+  if(s.src){
+    const el=track.querySelectorAll(".carousel-slide")[i];
+    el.innerHTML='<img class="slide-img" src="'+s.src+'" alt="'+s.alt+'">';
+  }
+});
+
+// Build overlay text on each slide
+track.querySelectorAll(".carousel-slide").forEach((el,i)=>{
+  if(!el.querySelector(".slide-overlay")){
+    const ov=document.createElement("div");
+    ov.className="slide-overlay";
+    ov.innerHTML='<div class="num">0'+(i+1)+'</div><h3>'+slides[i].alt+'</h3><p>'+slides[i].caption+'</p>';
+    el.appendChild(ov);
+  }
+});
+
+let cur=0;const total=5;
+const dotsEl=document.getElementById("dots");
+for(let i=0;i<total;i++){const d=document.createElement("span");d.className="dot"+(i===0?" on":"");d.onclick=()=>{cur=i;up()};dotsEl.appendChild(d)}
+function up(){track.style.transform="translateX(-"+cur*100+"%)";document.querySelectorAll(".dot").forEach((d,i)=>d.classList.toggle("on",i===cur))}
+function geser(a){cur=(cur+a+total)%total;up()}
+
+// Modal
+const modal=document.getElementById("modal"),mImg=document.getElementById("mImg"),mCap=document.getElementById("mCap");
+function buka(i){cur=i;up();mImg.src=slides[i].src;mCap.textContent=slides[i].caption;modal.classList.add("show")}
+function tutup(){modal.classList.remove("show");mImg.src=""}
+modal.addEventListener("click",e=>{if(e.target===modal)tutup()});
+function mGeser(a){cur=(cur+a+total)%total;mImg.src=slides[cur].src;mCap.textContent=slides[cur].caption;up()}
+
+// Zoom
+let sc=1;
+mImg.addEventListener("wheel",e=>{e.preventDefault();sc+=e.deltaY>0?-0.15:0.15;sc=Math.min(Math.max(sc,0.5),4);mImg.style.transform="scale("+sc+")"});
+new MutationObserver(()=>{if(modal.classList.contains("show"))sc=1}).observe(modal,{attributes:true,attributeFilter:["class"]});
+
+// Swipe mobile
+let sx=0;
+mImg.addEventListener("touchstart",e=>sx=e.touches[0].clientX);
+mImg.addEventListener("touchend",e=>{const d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>50)mGeser(d>0?1:-1)});
+</script>
+</body>
+</html>
